@@ -80,3 +80,7 @@ footer{padding:2.5rem 0 3rem;text-align:center;color:#8a93b8;font-size:.95rem}
 .convite ul{list-style:none;padding:1.2rem 0;margin:1.4rem auto;max-width:30rem;border-top:1px solid var(--borda);border-bottom:1px solid var(--borda);display:grid;gap:.55rem}
 .convite li{font-family:Fraunces,Georgia,serif;font-size:1.15rem;color:var(--branco)}
 .convite .assinatura{font-family:Fraunces,Georgia,serif;font-weight:800;font-size:clamp(1.3rem,4vw,1.6rem);color:var(--luz);margin:0 auto;text-align:center}
+@font-face{font-family:"Glacial Indifference";font-weight:400;font-display:swap;src:url(../fonts/GlacialIndifference-Regular.woff) format("woff")}
+@font-face{font-family:"Glacial Indifference";font-weight:700;font-display:swap;src:url(../fonts/GlacialIndifference-Bold.woff) format("woff")}
+.convite,.convite li,.convite .assinatura{font-family:"Glacial Indifference",Figtree,system-ui,sans-serif}
+.convite .assinatura{font-weight:700;letter-spacing:.02em}
