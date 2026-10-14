@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%95%8A%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<title>Revisão de Vidas | Um encontro face a face com Deus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="sub">Você está convidado para</p>
+    <h1>Revisão de Vidas</h1>
+    <p class="lema">Um encontro face a face com Deus</p>
+    <div class="quando" data-bind="quando"></div><br>
+    <a class="btn" href="#inscricao">Quero me inscrever</a>
+  </div>
+</header>
+
+<section>
+  <div class="wrap texto">
+    <h2>Pare um momento e olhe para dentro</h2>
+    <p>A Revisão de Vidas é um tempo separado para estar na presença de Deus: orar, chorar, ser ouvido e recomeçar. Não importa de onde você vem nem como está hoje. As portas estão abertas para você.</p>
+  </div>
+</section>
+
+<div class="galeria">
+    <img class="larga fogo" src="images/galeria-01-fogueira.jpg" alt="Roda de oração ao redor de uma fogueira, à noite" loading="lazy">
+    <img src="images/galeria-02-abraco.jpg" alt="Duas pessoas se abraçando durante um momento de oração" loading="lazy">
+    <img src="images/galeria-03-ajoelhada.jpg" alt="Mulher ajoelhada em oração" loading="lazy">
+    <img src="images/galeria-04-braco-erguido.jpg" alt="Mulher com o braço erguido em adoração" loading="lazy">
+    <img src="images/galeria-05-jovens-orando.jpg" alt="Jovens orando de olhos fechados" loading="lazy">
+    <img class="larga homem" src="images/galeria-06-homem-orando.jpg" alt="Homem orando de cabeça baixa e mãos unidas" loading="lazy">
+</div>
+
+<section>
+  <div class="wrap">
+    <h2>Veja um pedaço da Revisão</h2>
+    <a class="video" href="https://www.youtube.com/watch?v=z5GzmK8g2iA" target="_blank" rel="noopener">
+      <span>
+        <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#f0c27a"/><path d="M26 20l20 12-20 12z" fill="#2a1d05"/></svg>
+        Assistir no YouTube
+      </span>
+    </a>
+  </div>
+</section>
+
+<section class="info">
+  <div class="wrap">
+    <dl>
+      <div><dt>Datas</dt><dd data-bind="data"></dd></div>
+      <div><dt>Local</dt><dd>Informado por contato após a inscrição</dd></div>
+      <div><dt>Contato</dt><dd data-bind="contatoTexto"></dd></div>
+    </dl>
+  </div>
+</section>
+
+<section id="inscricao">
+  <div class="wrap">
+    <h2>Faça sua inscrição</h2>
+    <p class="texto">Preencha seus dados. Ao enviar, você será levado ao nosso WhatsApp para receber o local e as orientações.</p>
+    <form id="form" novalidate>
+      <label>Nome completo
+        <input id="nome" name="nome" autocomplete="name" placeholder="Seu nome">
+      </label>
+      <label>Seu WhatsApp
+        <input id="fone" name="fone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(34) 90000-0000">
+      </label>
+      <p class="erro" id="erro" role="alert"></p>
+      <button class="btn" type="submit">Enviar inscrição</button>
+      <p class="nota">Seus dados são usados só para este contato.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Sara | Coordenação resgate</div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>
