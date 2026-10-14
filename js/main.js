@@ -23,3 +23,17 @@ document.getElementById("form").addEventListener("submit", function(e){
   var msg = "Olá! Quero me inscrever na Revisão de Vidas (" + EVENTO.data + ").\nNome: " + nome + "\nWhatsApp: " + fone + "\nPode me informar o local?";
   window.location.href = "https://wa.me/" + EVENTO.whatsapp + "?text=" + encodeURIComponent(msg);
 });
+
+var video = document.getElementById("video");
+video.addEventListener("click", function(e){
+  e.preventDefault();
+  if(video.classList.contains("tocando")) return;
+  var f = document.createElement("iframe");
+  f.src = "https://www.youtube-nocookie.com/embed/" + video.getAttribute("data-id") + "?autoplay=1&rel=0";
+  f.title = "Vídeo da Revisão de Vidas";
+  f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+  f.allowFullscreen = true;
+  video.classList.add("tocando");
+  video.innerHTML = "";
+  video.appendChild(f);
+});
