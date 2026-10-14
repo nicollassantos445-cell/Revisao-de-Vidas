@@ -75,3 +75,8 @@ footer{padding:2.5rem 0 3rem;text-align:center;color:#8a93b8;font-size:.95rem}
 .musica{position:fixed;right:1rem;bottom:calc(1rem + env(safe-area-inset-bottom,0px));z-index:50;font:600 .95rem Figtree,sans-serif;color:#2a1d05;background:var(--luz);border:0;border-radius:999px;padding:.6rem 1.1rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.4)}
 .musica:hover{background:var(--luz-suave)}
 .musica-player{position:fixed;left:0;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden}
+.convite{margin:2.2rem 0 0;padding:2rem 1.6rem;text-align:center;background:var(--noite-2);border:1px solid var(--borda);border-top:3px solid var(--luz);border-radius:.8rem}
+.convite p{margin:0 auto 1rem;max-width:34rem}
+.convite ul{list-style:none;padding:1.2rem 0;margin:1.4rem auto;max-width:30rem;border-top:1px solid var(--borda);border-bottom:1px solid var(--borda);display:grid;gap:.55rem}
+.convite li{font-family:Fraunces,Georgia,serif;font-size:1.15rem;color:var(--branco)}
+.convite .assinatura{font-family:Fraunces,Georgia,serif;font-weight:800;font-size:clamp(1.3rem,4vw,1.6rem);color:var(--luz);margin:0}
