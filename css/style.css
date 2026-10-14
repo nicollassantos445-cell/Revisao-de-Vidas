@@ -64,3 +64,14 @@ footer{padding:2.5rem 0 3rem;text-align:center;color:#8a93b8;font-size:.95rem}
 .galeria .larga{grid-column:1/-1;aspect-ratio:16/9}
 .galeria .fogo{object-position:50% 55%}
 .galeria .homem{object-position:50% 40%}
+.acoes{text-align:center;margin:1.6rem 0 0}
+.voltar{display:inline-block;color:var(--luz-suave);text-decoration:none;font-weight:600;margin-bottom:1.5rem}
+.voltar:hover{color:var(--luz)}
+.player-nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:1.2rem}
+.player-nav .contador{color:var(--luz-suave);font-weight:600}
+.btn.secundario{background:transparent;color:var(--luz-suave);border:1px solid var(--luz)}
+.btn.secundario:hover{background:var(--noite-2)}
+.video .breve{color:var(--luz-suave)}
+.musica{position:fixed;right:1rem;bottom:calc(1rem + env(safe-area-inset-bottom,0px));z-index:50;font:600 .95rem Figtree,sans-serif;color:#2a1d05;background:var(--luz);border:0;border-radius:999px;padding:.6rem 1.1rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+.musica:hover{background:var(--luz-suave)}
+.musica-player{position:fixed;left:0;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden}
