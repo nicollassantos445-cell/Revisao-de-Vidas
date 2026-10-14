@@ -8,7 +8,7 @@ Site de convite para o evento cristão **Revisão de Vidas — um encontro face 
 - Página de convite com abertura em foto, texto de apresentação e galeria de fotos.
 - Datas do evento em um único lugar, fácil de trocar a cada edição.
 - Formulário de inscrição (nome e WhatsApp) que leva a pessoa direto ao WhatsApp da coordenação, com a mensagem já preenchida.
-- Botão que abre o vídeo de apresentação no YouTube.
+- Vídeo de apresentação que toca direto na página (player do YouTube incorporado).
 - Layout responsivo (celular e computador).
 
 ## Estrutura

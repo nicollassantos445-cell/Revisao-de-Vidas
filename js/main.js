@@ -12,6 +12,20 @@ document.querySelectorAll("[data-bind]").forEach(function(el){
   el.textContent = k === "quando" ? EVENTO.data + (EVENTO.horario ? " · " + EVENTO.horario : "") : EVENTO[k];
 });
 
+document.querySelectorAll(".video[data-video]").forEach(function(el){
+  el.addEventListener("click", function(){
+    var f = document.createElement("iframe");
+    f.src = "https://www.youtube-nocookie.com/embed/" + el.getAttribute("data-video") + "?autoplay=1&rel=0&playsinline=1";
+    f.title = "Vídeo da Revisão de Vidas";
+    f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    f.allowFullscreen = true;
+    var box = document.createElement("div");
+    box.className = "video";
+    box.appendChild(f);
+    el.replaceWith(box);
+  });
+});
+
 document.getElementById("form").addEventListener("submit", function(e){
   e.preventDefault();
   var nome = document.getElementById("nome").value.trim();
