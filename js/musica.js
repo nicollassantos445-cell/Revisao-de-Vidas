@@ -3,7 +3,7 @@ var MUSICA_ID = "j5ZCckq4ai0"; // código do vídeo do YouTube
 /* =========================== */
 
 (function(){
-  var tocando = false, pronto = false, querTocar = false, player;
+  var tocando = false, pronto = false, querTocar = false, comSom = false, player;
   var desligada = localStorage.getItem("musica") === "off";
 
   var btn = document.createElement("button");
@@ -17,21 +17,32 @@ var MUSICA_ID = "j5ZCckq4ai0"; // código do vídeo do YouTube
   document.body.appendChild(box);
 
   function atualizar(){
-    btn.textContent = tocando ? "♪ Pausar música" : "♪ Tocar música";
+    btn.textContent = "♪";
+    btn.setAttribute("aria-label", tocando ? "Pausar música" : "Tocar música");
+    btn.title = tocando ? "Pausar música" : "Tocar música";
+    btn.classList.toggle("ativa", tocando);
     btn.setAttribute("aria-pressed", tocando);
   }
-  function tocar(){ querTocar = true; if(pronto) player.playVideo(); }
+  // No celular o som só é liberado dentro de um toque: por isso desmuta e dá play na hora do toque
+  function tocar(){ querTocar = true; comSom = true; if(pronto){ player.unMute(); player.setVolume(60); player.playVideo(); } }
   function pausar(){ querTocar = false; if(pronto) player.pauseVideo(); }
 
   window.onYouTubeIframeAPIReady = function(){
     player = new YT.Player("musica-yt", {
-      width: 1, height: 1, videoId: MUSICA_ID,
-      playerVars: { loop: 1, playlist: MUSICA_ID, controls: 0, playsinline: 1, rel: 0 },
+      // O YouTube bloqueia players menores que 200x200 no celular
+      width: 200, height: 200, videoId: MUSICA_ID,
+      // Começa mudo (o celular permite tocar mudo sem toque) e o som é ligado no primeiro toque
+      playerVars: { autoplay: desligada ? 0 : 1, mute: 1, loop: 1, playlist: MUSICA_ID, controls: 0, playsinline: 1, rel: 0 },
       events: {
-        onReady: function(){ pronto = true; player.setVolume(60); if(querTocar) player.playVideo(); },
+        onReady: function(){
+          pronto = true;
+          if(querTocar){ player.unMute(); player.setVolume(60); player.playVideo(); }
+          else if(!desligada){ player.mute(); player.playVideo(); }
+        },
         onStateChange: function(e){
           if(e.data === YT.PlayerState.ENDED){ player.seekTo(0); player.playVideo(); }
-          tocando = e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.BUFFERING;
+          var ativo = e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.BUFFERING;
+          tocando = ativo && comSom;
           atualizar();
         }
       }
@@ -42,20 +53,21 @@ var MUSICA_ID = "j5ZCckq4ai0"; // código do vídeo do YouTube
   document.head.appendChild(s);
 
   btn.addEventListener("click", function(){
-    if(tocando){ pausar(); localStorage.setItem("musica","off"); tocando = false; }
-    else { tocar(); localStorage.removeItem("musica"); tocando = true; }
+    if(tocando){ pausar(); localStorage.setItem("musica","off"); desligada = true; tocando = false; }
+    else { tocar(); localStorage.removeItem("musica"); desligada = false; tocando = true; }
     atualizar();
   });
 
-  // Navegadores só deixam tocar som depois que a pessoa interage com a página
+  // Navegadores só deixam tocar som depois que a pessoa interage com a página.
+  // No celular, "pointerdown" não conta como interação: usa touchend/click/keydown.
+  var eventos = ["touchend", "click", "keydown"];
   function primeiraInteracao(e){
-    document.removeEventListener("pointerdown", primeiraInteracao, true);
-    document.removeEventListener("keydown", primeiraInteracao, true);
-    if(desligada || btn.contains(e.target) || (e.target.closest && e.target.closest(".video"))) return;
+    if(btn.contains(e.target)) return; // o próprio botão já cuida disso
+    eventos.forEach(function(ev){ document.removeEventListener(ev, primeiraInteracao, true); });
+    if(desligada || (e.target.closest && e.target.closest(".video"))) return;
     tocar(); tocando = true; atualizar();
   }
-  document.addEventListener("pointerdown", primeiraInteracao, true);
-  document.addEventListener("keydown", primeiraInteracao, true);
+  eventos.forEach(function(ev){ document.addEventListener(ev, primeiraInteracao, true); });
 
   // Pausa a música quando alguém dá play em um vídeo do site
   document.addEventListener("click", function(e){
@@ -70,6 +82,5 @@ var MUSICA_ID = "j5ZCckq4ai0"; // código do vídeo do YouTube
     }, 0);
   });
 
-  if(!desligada){ tocar(); } // tenta tocar já (alguns navegadores permitem)
   atualizar();
 })();
