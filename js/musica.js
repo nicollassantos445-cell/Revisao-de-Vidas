@@ -62,6 +62,14 @@ var MUSICA_ID = "j5ZCckq4ai0"; // código do vídeo do YouTube
     if(e.target.closest && e.target.closest("button.video")){ pausar(); tocando = false; atualizar(); }
   }, true);
 
+  // Clicar dentro de um reel do Instagram tira o foco da página: pausa a música
+  window.addEventListener("blur", function(){
+    setTimeout(function(){
+      var el = document.activeElement;
+      if(el && el.tagName === "IFRAME" && el.closest(".reel")){ pausar(); tocando = false; atualizar(); }
+    }, 0);
+  });
+
   if(!desligada){ tocar(); } // tenta tocar já (alguns navegadores permitem)
   atualizar();
 })();
