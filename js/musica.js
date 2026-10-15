@@ -60,7 +60,8 @@ var MUSICA_ARQUIVO = "/audio/louvor.mp3"; // arquivo de música do site
 
   // Navegadores só deixam tocar som depois que a pessoa interage com a página.
   // No celular, "pointerdown"/"touchstart" não contam como interação: usa touchend/pointerup/click/keydown.
-  var eventos = ["touchend", "pointerup", "click", "keydown"];
+  // No computador, "mousedown" já conta como interação.
+  var eventos = ["touchend", "pointerup", "mousedown", "click", "keydown"];
   function tocarNoToque(e){
     if(tocando || desligada) return;
     if(btn.contains(e.target)) return; // o próprio botão já cuida disso
@@ -83,4 +84,11 @@ var MUSICA_ARQUIVO = "/audio/louvor.mp3"; // arquivo de música do site
   });
 
   atualizar();
+
+  // No computador/notebook, tenta começar sozinha assim que a página abre.
+  // Se o navegador bloquear, a música começa na primeira interação (clique, tecla ou toque).
+  if(!desligada){
+    if(audio.readyState >= 2) tocar();
+    else audio.addEventListener("canplay", function(){ if(!desligada) tocar(); }, { once: true });
+  }
 })();
