@@ -26,18 +26,31 @@ var MUSICA_ID = "j5ZCckq4ai0"; // código do vídeo do YouTube
     btn.setAttribute("aria-pressed", tocando);
   }
   // No celular o som só é liberado dentro de um toque: por isso desmuta e dá play na hora do toque
+  var pedidoEm = 0, fade;
   function tocar(){
     querTocar = true; comSom = true;
     if(!pronto) return;
-    // Ajusta o volume antes de desmutar, para o som não começar alto e cair de repente
-    player.setVolume(60); player.unMute();
-    // Um toque dispara vários eventos (touchend, pointerup, click). Chamar playVideo de novo
-    // com a música já tocando ou carregando faz o som engasgar: só dá play se estiver parada
+    // Um toque dispara vários eventos (touchend, pointerup, click) quase ao mesmo tempo, e o estado
+    // do player só muda depois. Chamar playVideo/unMute de novo nesse intervalo faz o som engasgar:
+    // ignora pedidos repetidos enquanto o anterior ainda está começando
+    if(Date.now() - pedidoEm < 1500) return;
     var estado = player.getPlayerState();
+    if(player.isMuted()){ entrarSuave(); player.unMute(); }
     if(estado === YT.PlayerState.PLAYING) tocando = true;
-    else if(estado !== YT.PlayerState.BUFFERING) player.playVideo();
+    else if(estado !== YT.PlayerState.BUFFERING){ pedidoEm = Date.now(); player.playVideo(); }
   }
-  function pausar(){ querTocar = false; if(pronto) player.pauseVideo(); }
+  // Aumenta o volume aos poucos: o começo, enquanto o áudio ainda está carregando, fica suave em vez de engasgado
+  function entrarSuave(){
+    clearInterval(fade);
+    var v = 0;
+    player.setVolume(0);
+    fade = setInterval(function(){
+      v += 5;
+      player.setVolume(Math.min(v, 60));
+      if(v >= 60) clearInterval(fade);
+    }, 100);
+  }
+  function pausar(){ querTocar = false; clearInterval(fade); if(pronto) player.pauseVideo(); }
 
   window.onYouTubeIframeAPIReady = function(){
     player = new YT.Player("musica-yt", {
@@ -48,12 +61,13 @@ var MUSICA_ID = "j5ZCckq4ai0"; // código do vídeo do YouTube
       events: {
         onReady: function(){
           pronto = true;
-          if(querTocar){ player.setVolume(60); player.unMute(); player.playVideo(); }
+          if(querTocar){ entrarSuave(); player.unMute(); pedidoEm = Date.now(); player.playVideo(); }
           else if(!desligada){ player.mute(); player.playVideo(); }
         },
         onStateChange: function(e){
           // Repete a música voltando ao início (mais suave que o loop do YouTube, que recarrega o vídeo)
           if(e.data === YT.PlayerState.ENDED){ player.seekTo(0); player.playVideo(); }
+          if(e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.PAUSED) pedidoEm = 0;
           var ativo = e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.BUFFERING;
           tocando = ativo && comSom && querTocar;
           atualizar();
