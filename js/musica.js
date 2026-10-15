@@ -85,10 +85,7 @@ var MUSICA_ARQUIVO = "/audio/louvor.mp3"; // arquivo de música do site
 
   atualizar();
 
-  // No computador/notebook, tenta começar sozinha assim que a página abre.
-  // Se o navegador bloquear, a música começa na primeira interação (clique, tecla ou toque).
-  if(!desligada){
-    if(audio.readyState >= 2) tocar();
-    else audio.addEventListener("canplay", function(){ if(!desligada) tocar(); }, { once: true });
-  }
+  // Tenta começar sozinha assim que a página abre.
+  // Se o navegador bloquear o som sem interação, a música começa no primeiro toque, clique ou tecla.
+  if(!desligada) tocar();
 })();
