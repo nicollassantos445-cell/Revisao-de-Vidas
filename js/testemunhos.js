@@ -1,9 +1,9 @@
 /* ===== EDITE AQUI OS VÍDEOS DE TESTEMUNHO ===== */
-// Cole o código do vídeo do YouTube (o que vem depois de "watch?v=" ou "youtu.be/")
+// YouTube: cole o código do vídeo (o que vem depois de "watch?v=" ou "youtu.be/")
+// Instagram: use tipo "instagram" e o código do reel (o que vem depois de "/reel/")
 var VIDEOS = [
-  { id: "", titulo: "Testemunho 1" },
-  { id: "", titulo: "Testemunho 2" },
-  { id: "", titulo: "Testemunho 3" }
+  { tipo: "instagram", id: "Dd6TXznthEh", titulo: "Testemunho 1" },
+  { tipo: "instagram", id: "Dd-SQX4Mr95", titulo: "Testemunho 2" }
 ];
 /* ============================================== */
 
@@ -20,6 +20,19 @@ function mostrar(i){
     vazio.className = "video";
     vazio.innerHTML = '<span class="breve">Vídeo em breve</span>';
     player.appendChild(vazio);
+    return;
+  }
+  if(v.tipo === "instagram"){
+    var reel = document.createElement("div");
+    reel.className = "video reel";
+    var r = document.createElement("iframe");
+    r.src = "https://www.instagram.com/reel/" + v.id + "/embed/";
+    r.title = v.titulo;
+    r.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    r.allowFullscreen = true;
+    r.setAttribute("scrolling", "no");
+    reel.appendChild(r);
+    player.appendChild(reel);
     return;
   }
   var btn = document.createElement("button");
